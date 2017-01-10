@@ -1,0 +1,30 @@
+{
+  "name": "sample-unit-test",
+  "version": "1.0.0",
+  "description": "Sample unit test cases for nodejs with karma",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jaspal Singh",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.18.0",
+    "browserify": "^13.3.0",
+    "chai": "^3.5.0",
+    "grunt": "^1.0.1",
+    "grunt-babel": "^6.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-karma": "^2.0.0",
+    "grunt-mocha": "^1.0.2",
+    "karma": "^1.3.0",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^1.3.0",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "load-grunt-tasks": "^3.5.2",
+    "mocha": "^3.2.0",
+    "phantomjs": "^2.1.7",
+    "sinon": "^1.17.7",
+    "watchify": "^3.8.0"
+  }
+}
