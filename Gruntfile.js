@@ -26,11 +26,6 @@ module.exports = function(grunt) {
           }
         },
       },
-    },
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js'
-      }
     }
   });
 
@@ -39,6 +34,5 @@ module.exports = function(grunt) {
 
   // Default task(s).
   grunt.registerTask('default', ['babel', 'watch']);
-  grunt.registerTask('test', ['babel', 'karma']);
 
 };
