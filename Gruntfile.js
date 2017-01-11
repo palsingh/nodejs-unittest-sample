@@ -9,9 +9,13 @@ module.exports = function(grunt) {
             presets: ['es2015']
         },
         dist: {
-            files: {
-                'app/index.js': 'app/es6/index.es6'
-            }
+            files: [{
+              expand: true,
+              cwd: 'app/es6/',
+              src: ['*.es6'],
+              dest: 'app/',
+              ext: '.js'
+          }]
         }
     },
     watch: {

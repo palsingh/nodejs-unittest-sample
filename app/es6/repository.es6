@@ -1,4 +1,10 @@
+var q = require('q');
+
 class SearchRepository {
+
+	constructor (db) {
+		this.db = db;
+	}
 	
 	search (keyword) {
 		// Sample data
@@ -15,8 +21,26 @@ class SearchRepository {
 			firstName: 'foo3',
 			lastName: 'bar3'
 		}];
+		var promise = q.defer();
 
-		return new Promise((resolve, reject) => {
+		db.find({
+			'name': keyword
+		})
+		.then(data => {
+			promise.resolve(data);
+		}, error => {
+			promise.reject(error);
+		});
+
+		return promise.defer;
+
+		/*return new Promise((resolve, reject) => {
+			var promise = db.find({});
+
+			promise.then(data => {
+				resolve(data);
+			});
+			
 			setTimeout(() => {
 				if (keyword.length % 2 === 0) {
 					resolve(data);
@@ -24,7 +48,7 @@ class SearchRepository {
 					reject('some error');
 				}
 			}, 2000);
-		});
+		});*/
 	
 	}
 }
