@@ -16,14 +16,25 @@ describe("SearchService", function () {
 		}, {
 			firstName: 'foo3',
 			lastName: 'bar3'
-		}];
-	var mockResult = ['foo bar', 'foo1 bar1', 'foo2 bar2', 'foo3 bar3']
+		}],
+		mockResult = ['foo bar', 'foo1 bar1', 'foo2 bar2', 'foo3 bar3'],
+		deferred,
+		searchRepository,
+		searchService;
 
-	var deferred = q.defer();
-	var searchRepository = {
-		search: sinon.stub().returns(deferred.promise)
-	}
-	var searchService = new SearchService(searchRepository);
+	beforeEach(function() {
+		deferred = q.defer();
+		searchRepository = {
+			search: sinon.stub().returns(deferred.promise)
+		}
+		searchService = new SearchService(searchRepository);
+	});
+
+	afterEach(function () {
+		deferred = null;
+		searchRepository = null;
+		searchService = null;
+	});
 
 	it("should return empty array if `keyword` is false", function () {
 		expect(searchService.getSearchResults()).to.deep.equal([]);
@@ -42,11 +53,17 @@ describe("SearchService", function () {
 		deferred.resolve(mockData);
 	});
 
-	/*xit("should catch error if search throws error", function () {
-		var spy = sinon.stub(searchService,'onRejectHandler_').returns(true);
+	it("should execute reject handler when promise is rejected", function (done) {
+		var spy = sinon.spy(searchService,'onRejectHandler_');
 		var result = searchService.getSearchResults('keyword');
-		deferred.reject('some error');
-		expect(spy.called).to.be.true;
 		
-	});*/
+		result.then(function () {
+			expect(spy.calledOnce).to.be.true;
+			expect(spy.calledWith('some error')).to.be.true;
+			searchService.onRejectHandler_.restore();
+			done();
+		});
+		
+		deferred.reject('some error');
+	});
 });

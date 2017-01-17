@@ -10,11 +10,7 @@ class SearchService {
 		}
 
 		var promise = this.searchRepository.search(keyword);
-		return promise.then(data => this.transformData_(data),
-			error => this.onRejectHandler_(error))
-			.catch(error => {
-				console.log('what error?');
-			});
+		return promise.then(data => this.transformData_(data), this.onRejectHandler_);
 	}
 
 	onRejectHandler_(error) {
