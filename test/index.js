@@ -18,6 +18,7 @@ describe("SearchService", function () {
 			lastName: 'bar3'
 		}],
 		mockResult = ['foo bar', 'foo1 bar1', 'foo2 bar2', 'foo3 bar3'],
+		mockError = 'some error',
 		deferred,
 		searchRepository,
 		searchService;
@@ -64,6 +65,23 @@ describe("SearchService", function () {
 			done();
 		});
 		
-		deferred.reject('some error');
+		deferred.reject(mockError);
+	});
+
+	it("should catch the error on promise", function () {
+		var spy = sinon.spy(searchService, 'errorHandler_');
+
+		var result = searchService.getSearchResults('keyword');
+		
+		result.then(function () {
+			throw new Error(mockError);
+
+			expect(spy.calledOnce).to.be.true;
+			searchService.errorHandler_.restore();
+			
+			done();
+		});
+		
+		deferred.reject(mockError);
 	});
 });
